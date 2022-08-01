@@ -42,7 +42,7 @@ public class User{
     @Column(name = "pesel")
     private String pesel;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "CR_usersroles",
             joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "role_id", nullable = false, updatable = false)})

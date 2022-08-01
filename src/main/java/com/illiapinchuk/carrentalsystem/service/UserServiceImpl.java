@@ -5,20 +5,28 @@ import com.illiapinchuk.carrentalsystem.exception.EmailExistsException;
 import com.illiapinchuk.carrentalsystem.exception.LoginExistsException;
 import com.illiapinchuk.carrentalsystem.model.RoleName;
 import com.illiapinchuk.carrentalsystem.model.User;
+import com.illiapinchuk.carrentalsystem.model.UserPrincipal;
 import com.illiapinchuk.carrentalsystem.repository.RoleRepository;
 import com.illiapinchuk.carrentalsystem.repository.UserRepository;
 import com.illiapinchuk.carrentalsystem.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
@@ -50,7 +58,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setLogin(userDto.getLogin());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         user.setPesel(userDto.getPesel());
@@ -77,5 +85,10 @@ public class UserServiceImpl implements UserService {
 
     public boolean checkEmailExists(String email) {
         return userRepository.getUserByEmail(email) != null;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return new UserPrincipal(userRepository.getUserByEmail(username));
     }
 }

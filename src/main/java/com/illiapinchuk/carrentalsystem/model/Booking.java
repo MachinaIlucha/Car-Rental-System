@@ -33,5 +33,4 @@ public class Booking {
 
     @Column(name = "total_cost")
     private Double totalCost;
-
 }
