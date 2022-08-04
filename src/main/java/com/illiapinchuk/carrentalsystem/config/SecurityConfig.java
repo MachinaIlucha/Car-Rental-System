@@ -55,7 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/",
                         "/registration",
                         "/login",
-                        "/users/register").permitAll()
+                        "/users/register",
+                        "/cars",
+                        "/cars/{carId}").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

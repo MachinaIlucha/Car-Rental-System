@@ -1,13 +1,14 @@
 package com.illiapinchuk.carrentalsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "CR_cars")
 public class Car implements Serializable {
@@ -36,10 +37,22 @@ public class Car implements Serializable {
     @Column(name = "vehicle_status")
     private Boolean carStatus;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "car", fetch = FetchType.LAZY)
     private CarParameters carParameters;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="car")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id")
     private Set<Comment> comments;
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", registration='" + registration + '\'' +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", dailyFee=" + dailyFee +
+                ", carStatus=" + carStatus +
+                '}';
+    }
 }

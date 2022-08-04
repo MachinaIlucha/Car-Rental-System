@@ -1,11 +1,9 @@
 package com.illiapinchuk.carrentalsystem.model;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 @Table(name = "CR_roles")
 public class Role implements GrantedAuthority {

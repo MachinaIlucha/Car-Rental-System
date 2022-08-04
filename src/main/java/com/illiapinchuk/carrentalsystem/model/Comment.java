@@ -1,14 +1,14 @@
 package com.illiapinchuk.carrentalsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "CR_comments")
 public class Comment {
@@ -30,11 +30,22 @@ public class Comment {
     private Integer rating;
 
     @ManyToOne
-    @JoinColumn(name="car_id", nullable=false)
+    @JoinColumn(name="car_id")
     private Car car;
 
     @PrePersist
     public void prePersist(){
         creationDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", login='" + login + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }

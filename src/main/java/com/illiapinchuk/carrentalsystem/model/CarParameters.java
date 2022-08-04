@@ -1,6 +1,5 @@
 package com.illiapinchuk.carrentalsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,12 +11,10 @@ import java.io.Serializable;
 public class CarParameters implements Serializable {
 
     @Id
-    @JsonIgnore
     @Column(name = "car_id")
     private Long id;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
 

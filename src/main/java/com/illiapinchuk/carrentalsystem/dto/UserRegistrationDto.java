@@ -1,12 +1,10 @@
 package com.illiapinchuk.carrentalsystem.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 @Data
 public class UserRegistrationDto {

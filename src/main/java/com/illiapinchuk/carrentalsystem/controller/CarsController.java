@@ -4,9 +4,12 @@ import com.illiapinchuk.carrentalsystem.dto.CarDto;
 import com.illiapinchuk.carrentalsystem.model.Car;
 import com.illiapinchuk.carrentalsystem.service.interfaces.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/cars")
 public class CarsController {
 
@@ -24,8 +27,16 @@ public class CarsController {
     }
 
     @GetMapping("/{carId}")
-    public Car getCarById(@PathVariable Long carId){
-        return carService.getCarById(carId);
+    @Transactional
+    public String getCarById(@PathVariable Long carId, ModelMap model){
+        model.addAttribute("car", carService.getCarById(carId));
+        return "car-details";
+    }
+
+    @GetMapping
+    public String getListOfCars(ModelMap model){
+        model.addAttribute("cars", carService.getAllCars());
+        return "cars";
     }
 
 

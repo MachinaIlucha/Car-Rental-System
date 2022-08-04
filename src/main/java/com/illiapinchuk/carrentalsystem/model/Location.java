@@ -22,7 +22,7 @@ public class Location {
     private String city;
 
     @Column(name = "address")
-    private String addres;
+    private String address;
 
     @Column(name = "email")
     private String email;

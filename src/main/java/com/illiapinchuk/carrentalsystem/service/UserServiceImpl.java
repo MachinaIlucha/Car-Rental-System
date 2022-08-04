@@ -15,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public User addUser(UserRegistrationDto userDto) throws EmailExistsException, LoginExistsException {
         if (checkLoginExists(userDto.getLogin())) throw new LoginExistsException();
         if (checkEmailExists(userDto.getEmail())) throw new EmailExistsException();
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         user.setPesel(userDto.getPesel());
-        user.setRoles(Set.of(roleRepository.findRoleByRoleName(RoleName.CUSTOMER)));
+        user.setRoles(Collections.singleton(roleRepository.findRoleByRoleName(RoleName.CUSTOMER)));
 
         return userRepository.save(user);
     }
