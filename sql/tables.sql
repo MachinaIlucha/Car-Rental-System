@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS CR_roles(
 );
 
 CREATE TABLE IF NOT EXISTS CR_usersRoles(
-    user_id             INT REFERENCES USERS,
-    role_id             INT REFERENCES ROLE,
+    user_id             INT NOT NULL,
+    role_id             INT NOT NULL,
     CONSTRAINT fk_user_id
         FOREIGN KEY(user_id)
             REFERENCES CR_users(id),
