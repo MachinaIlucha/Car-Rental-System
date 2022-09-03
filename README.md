@@ -2,6 +2,7 @@
 
 I wrote this project to get familiar how jsp works and how i can use it in my future projects.
 I hope I coped well with this task at least at the initial level.
+I also handle how to use dto to collect data.
 
 ## About project
 
